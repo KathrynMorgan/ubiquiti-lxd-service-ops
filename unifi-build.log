@@ -1,0 +1,16 @@
+
+ifup eth0
+vim /etc/apt/apt.conf
+echo 'deb http://www.ubnt.com/downloads/unifi/debian stable ubiquiti' | tee -a /etc/apt/sources.list.d/100-ubnt.list
+ln -s /etc/network/interfaces.d/ ~ 
+cp interfaces.d/50-cloud-init.cfg interfaces.d/eth1.cfg
+vim interfaces.d/eth1.cfg
+ifup eth1
+ifup eth0
+apt update
+apt upgrade -y
+apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10
+apt-key adv --keyserver keyserver.ubuntu.com --recv C0A52C50
+apt update
+apt install unifi --install-recommends -y
+systemctl status unifi
